@@ -8,7 +8,7 @@ import AppNavbar from './Components/AppNavbar/AppNavbar'
 import AccueilPage from './Pages/AccueilPage/AccueilPage'
 import AddPage from './Pages/AddPage/AddPage'
 import UpdatePage from './Pages/UpdatePage/UpdatePage'
-import StatistiquesPage from './Pages/StatistiquesPage/StatistiquesPage'
+import PrevNotePage from './Pages/PrevisualisationNote/PrevNote'
 import CarnetPage from './Pages/CarnetPage/CarnetPage'
 
 ReactDOM.render(
@@ -20,7 +20,7 @@ ReactDOM.render(
 			<Routes>
 				<Route index element={<AccueilPage />} />
 
-				<Route path="/stats" element={<StatistiquesPage />} />
+				<Route path="/prev" element={<PrevNotePage />} />
 
 				<Route path="/carnet/:group" element={<Outlet />}>
 					<Route index element={<CarnetPage />} />
