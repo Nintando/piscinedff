@@ -27,7 +27,7 @@ export default function CarnetPages() {
 				<td>{note.categorie}</td>
 				<td>{note.note}</td>
 				<td>
-					<Button variant="outline-primary" as={Link} to={`/carnet/update${indice}`}>
+					<Button variant="outline-primary" as={Link} to={`update-${indice}`}>
 						Modifier
 					</Button>
 				</td>
