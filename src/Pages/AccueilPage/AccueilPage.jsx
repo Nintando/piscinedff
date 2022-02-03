@@ -13,7 +13,7 @@ export default function HomePage() {
 								<p className="col-md-8 fs-4">Piscine ReactJs</p>
 								&nbsp;
 								<h1 className="display-5 fw-bold">Statistiques</h1>
-								<Button variant="outline-primary" size="lg" as={Link} to="/carnet/maison">
+								<Button className="float-end" variant="outline-primary" size="lg" as={Link} to="/carnet/maison">
 									Carnet de notes
 								</Button>
 							</Container>

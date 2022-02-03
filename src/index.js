@@ -20,11 +20,10 @@ ReactDOM.render(
 			<Routes>
 				<Route index element={<AccueilPage />} />
 
-				<Route path="/prev" element={<PrevNotePage />} />
-
 				<Route path="/carnet/:group" element={<Outlet />}>
 					<Route index element={<CarnetPage />} />
 					<Route path="add" element={<AddPage />} />
+					<Route path="prev" element={<PrevNotePage />} />
 					<Route path="update-:indice" element={<UpdatePage />} />
 				</Route>
 			</Routes>
