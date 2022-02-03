@@ -12,12 +12,6 @@ export default function AppNavbar() {
 						<Nav.Link as={Link} to="/">
 							Accueil
 						</Nav.Link>
-						<Nav.Link as={Link} to="/stats">
-							Statistiques
-						</Nav.Link>
-						<Nav.Link as={Link} to="/carnet">
-							Carnets de notes
-						</Nav.Link>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

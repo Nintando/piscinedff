@@ -1,4 +1,5 @@
 import { Container, Row, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 export default function HomePage() {
 	return (
@@ -10,10 +11,13 @@ export default function HomePage() {
 							<Container fluid className="py-5">
 								<h1 className="display-5 fw-bold">BTC Single Page Application</h1>
 								<p className="col-md-8 fs-4">Piscine ReactJs</p>
-								<a className="btn-primary btn btn-lg" href="https://reactrouter.com/">
-									Documentation React Router
-								</a>
 								&nbsp;
+								<Button className="m-2" variant="outline-primary" size="lg" as={Link} to="/stats">
+									Statistiques
+								</Button>
+								<Button variant="outline-primary" size="lg" as={Link} to="/carnet">
+									Carnet de notes
+								</Button>
 							</Container>
 						</div>
 					</Row>
