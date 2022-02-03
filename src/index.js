@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import AppNavbar from './Components/AppNavbar/AppNavbar'
 import AccueilPage from './Pages/AccueilPage/AccueilPage'
@@ -18,11 +18,15 @@ ReactDOM.render(
 				<AppNavbar />
 			</header>
 			<Routes>
-				<Route path="/" element={<AccueilPage />} />
+				<Route index element={<AccueilPage />} />
+
 				<Route path="/stats" element={<StatistiquesPage />} />
-				<Route path="/carnet" element={<CarnetPage />} />
-				<Route path="/carnet/add" element={<AddPage />} />
-				<Route path="/carnet/update:indice" element={<UpdatePage />} />
+
+				<Route path="/carnet/:group" element={<Outlet />}>
+					<Route index element={<CarnetPage />} />
+					<Route path="add" element={<AddPage />} />
+					<Route path="update-:indice" element={<UpdatePage />} />
+				</Route>
 			</Routes>
 		</Router>
 	</React.StrictMode>,

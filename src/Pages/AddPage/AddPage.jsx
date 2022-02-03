@@ -1,8 +1,10 @@
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState } from 'react'
+import showdown from 'showdown'
 
 export default function NotesAddPage() {
+	const { group } = useParams()
 	const [formAdd, setFormAdd] = useState({
 		titre: '',
 		categorie: '',
@@ -19,12 +21,12 @@ export default function NotesAddPage() {
 		tmpForm.id = id
 		setFormAdd(tmpForm)
 
-		let notes = localStorage.getItem('notes')
+		let notes = localStorage.getItem(`notes-${group}`)
 		if (notes === null) notes = '[]'
 		notes = JSON.parse(notes)
 		notes.push(tmpForm)
-		localStorage.setItem('notes', JSON.stringify(notes))
-		navigate('/carnet')
+		localStorage.setItem(`notes-${group}`, JSON.stringify(notes))
+		navigate(`/carnet/${group}`)
 	}
 
 	return (
@@ -71,7 +73,7 @@ export default function NotesAddPage() {
 									<option value="Manga">Manga</option>
 								</select>
 							</Form.Group>
-							<Form.Group className="mb-3">
+							<Form.Group className="m-3">
 								<Form.Label className="m-2">Note : </Form.Label>
 								<textarea
 									type="text"
@@ -84,11 +86,12 @@ export default function NotesAddPage() {
 									}}
 									required
 								/>
+								<textarea type="text" placeholder="Entrer une note" value={formAdd.note} />
 							</Form.Group>
 
 							<hr />
 
-							<Button variant="light" as={Link} to="/carnet">
+							<Button variant="light" as={Link} to={'/carnet/' + group}>
 								Retour
 							</Button>
 

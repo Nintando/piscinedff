@@ -15,7 +15,7 @@ export default function HomePage() {
 								<Button className="m-2" variant="outline-primary" size="lg" as={Link} to="/stats">
 									Statistiques
 								</Button>
-								<Button variant="outline-primary" size="lg" as={Link} to="/carnet">
+								<Button variant="outline-primary" size="lg" as={Link} to="/carnet/maison">
 									Carnet de notes
 								</Button>
 							</Container>

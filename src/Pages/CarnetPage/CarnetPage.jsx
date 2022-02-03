@@ -1,21 +1,22 @@
 import { Container, Row, Col, Button, Table } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
 export default function CarnetPages() {
+	const { group } = useParams()
 	const [notes, setNotes] = useState([])
 
 	useEffect(() => {
-		let datas = localStorage.getItem('notes') ? localStorage.getItem('notes') : '[]'
+		let datas = localStorage.getItem(`notes-${group}`) ? localStorage.getItem(`notes-${group}`) : '[]'
 		datas = JSON.parse(datas)
 		setNotes(datas)
 	}, [])
 
 	function del(indice) {
-		let datas = localStorage.getItem('notes')
+		let datas = localStorage.getItem(`notes-${group}`)
 		datas = JSON.parse(datas)
 		datas.splice(indice, 1)
-		localStorage.setItem('notes', JSON.stringify(datas))
+		localStorage.setItem(`notes-${group}`, JSON.stringify(datas))
 		setNotes(datas)
 	}
 
@@ -51,7 +52,7 @@ export default function CarnetPages() {
 				<Row>
 					<Col md={12}>
 						<div className="mb-3">
-							<Button as={Link} to="/carnet/add">
+							<Button as={Link} to={'/carnet/' + group + '/add'}>
 								Ajouter une note
 							</Button>
 						</div>
