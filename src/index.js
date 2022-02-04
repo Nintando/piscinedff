@@ -10,6 +10,7 @@ import AddPage from './Pages/AddPage/AddPage'
 import UpdatePage from './Pages/UpdatePage/UpdatePage'
 import PrevNotePage from './Pages/PrevisualisationNote/PrevNote'
 import CarnetPage from './Pages/CarnetPage/CarnetPage'
+import ConfigGlobal from './Pages/Global/ConfigGlobal'
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.render(
 			</header>
 			<Routes>
 				<Route index element={<AccueilPage />} />
+				<Route path="/config" element={<ConfigGlobal />} />
 
 				<Route path="/carnet/:group" element={<Outlet />}>
 					<Route index element={<CarnetPage />} />

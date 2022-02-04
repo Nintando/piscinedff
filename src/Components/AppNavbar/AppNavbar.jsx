@@ -13,6 +13,9 @@ export default function AppNavbar(props) {
 						<Nav.Link as={Link} to="/">
 							Accueil
 						</Nav.Link>
+						<Nav.Link as={Link} to="/config">
+							Config Global
+						</Nav.Link>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

@@ -1,17 +1,26 @@
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import showdown from 'showdown'
 
-export default function NotesAddPage() {
+export default function NotesAddPage(props) {
 	const { group } = useParams()
+
 	const [formAdd, setFormAdd] = useState({
 		titre: '',
 		categorie: '',
 		note: '',
 	})
 
+	const [categ, setCateg] = useState([])
+
 	const navigate = useNavigate()
+
+	useEffect(() => {
+		let datas = localStorage.getItem(`categorie`) ? localStorage.getItem(`categorie`) : '[]'
+		datas = JSON.parse(datas)
+		setCateg(datas)
+	}, [])
 
 	function add(e) {
 		e.preventDefault()
@@ -28,6 +37,11 @@ export default function NotesAddPage() {
 		localStorage.setItem(`notes-${group}`, JSON.stringify(notes))
 		navigate(`/carnet/${group}`)
 	}
+
+	let displaySelect = categ.map(categInfos => {
+		const id = categInfos.id
+		return <option value={categInfos.titre}>{categInfos.titre}</option>
+	})
 
 	return (
 		<>
@@ -68,9 +82,7 @@ export default function NotesAddPage() {
 									required
 								>
 									<option>Choisir une catégorie</option>
-									<option value="Devoir">Devoir</option>
-									<option value="Jeux">Jeux</option>
-									<option value="Manga">Manga</option>
+									{displaySelect}
 								</select>
 							</Form.Group>
 							<Form.Group className="m-3">
