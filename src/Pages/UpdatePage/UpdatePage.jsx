@@ -7,10 +7,9 @@ export default function JoueurUpdatePage() {
 	let notes = localStorage.getItem(`notes-${group}`)
 	notes = JSON.parse(notes)
 	const [formUpdate, setFormUpdate] = useState({
-		id: notes[indice].id,
-		prenom: notes[indice].prenom,
-		nom: notes[indice].nom,
-		pseudo: notes[indice].pseudo,
+		titre: notes[indice].titre,
+		categorie: notes[indice].categorie,
+		note: notes[indice].note,
 	})
 
 	const navigate = useNavigate()

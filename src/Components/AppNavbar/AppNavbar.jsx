@@ -1,7 +1,8 @@
 import { Navbar, Container, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-export default function AppNavbar() {
+export default function AppNavbar(props) {
+	const setSearch = props.setSearch
 	return (
 		<Navbar bg="light" expand="lg">
 			<Container>
@@ -11,9 +12,6 @@ export default function AppNavbar() {
 					<Nav className="me-auto">
 						<Nav.Link as={Link} to="/">
 							Accueil
-						</Nav.Link>
-						<Nav.Link as={Link} to="/carnet/add">
-							Créer une note
 						</Nav.Link>
 					</Nav>
 				</Navbar.Collapse>

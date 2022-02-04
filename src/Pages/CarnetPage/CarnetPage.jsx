@@ -1,10 +1,12 @@
-import { Container, Row, Col, Button, Table } from 'react-bootstrap'
+import { Container, Row, Col, Button, Table, Form, FormControl, ListGroup } from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
-export default function CarnetPages() {
+export default function CarnetPages(props) {
 	const { group } = useParams()
 	const [notes, setNotes] = useState([])
+	const [notesFilter, setNotesFilter] = useState([])
+	const [search, setSearch] = useState('')
 
 	useEffect(() => {
 		let datas = localStorage.getItem(`notes-${group}`) ? localStorage.getItem(`notes-${group}`) : '[]'
@@ -39,6 +41,20 @@ export default function CarnetPages() {
 			</tr>
 		)
 	})
+
+	useEffect(() => {
+		setNotesFilter(notes)
+		if (search.length > 0) {
+			let lowerSearch = search.toLowerCase()
+			let res = notes.filter(note => {
+				let lowerItem = note.ToString().toLowerCase()
+				if (lowerItem.indexOf(lowerSearch) > -1) return note
+				return null
+			})
+			setNotesFilter(res)
+		}
+	}, [search, notes])
+
 	return (
 		<>
 			<Container>
@@ -46,6 +62,18 @@ export default function CarnetPages() {
 					<Col>
 						<h1>Gestion des notes</h1>
 						<hr />
+						<Form className="d-flex mb-4">
+							<FormControl
+								type="search"
+								placeholder="Rechercher une note"
+								className="me-2"
+								value={search}
+								onChange={e => {
+									setSearch(e.target.value)
+								}}
+							/>
+							<Button variant="secondary">Rehercher</Button>
+						</Form>
 					</Col>
 				</Row>
 
