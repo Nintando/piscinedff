@@ -22,7 +22,7 @@ export default function CarnetPages(props) {
 		setNotes(datas)
 	}
 
-	let displayNotes = notes.map((note, indice) => {
+	let displayNotes = notesFilter.map((note, indice) => {
 		return (
 			<tr key={'notes-' + note.id}>
 				<td>{note.titre}</td>
@@ -46,9 +46,9 @@ export default function CarnetPages(props) {
 		setNotesFilter(notes)
 		if (search.length > 0) {
 			let lowerSearch = search.toLowerCase()
-			let res = notes.filter(note => {
-				let lowerItem = note.ToString().toLowerCase()
-				if (lowerItem.indexOf(lowerSearch) > -1) return note
+			let res = notes.filter(item => {
+				let lowerItem = item.note.toLowerCase()
+				if (lowerItem.indexOf(lowerSearch) > -1) return item
 				return null
 			})
 			setNotesFilter(res)
