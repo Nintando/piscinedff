@@ -1,4 +1,4 @@
-import { Container, Row, Col, Button, Table, Form, FormControl, ListGroup } from 'react-bootstrap'
+import { Container, Row, Col, Button, Table, Form, FormControl, Card } from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
@@ -39,6 +39,32 @@ export default function CarnetPages(props) {
 					</Button>
 				</td>
 			</tr>
+		)
+	})
+
+	let displayCardsNotes = notesFilter.map((note, indice) => {
+		return (
+			<Card className="text-center" style={{ width: '18rem' }} key={'notes-' + note.id}>
+				<Card.Header as="h5">{note.titre}</Card.Header>
+				<Card.Body>
+					<Card.Subtitle className="mb-2 text-muted">{note.categorie}</Card.Subtitle>
+					<hr
+						style={{
+							color: '#000000',
+							backgroundColor: '#000000',
+							height: 0.5,
+							borderColor: '#000000',
+						}}
+					/>
+					<Card.Text>{note.note}</Card.Text>
+					<Button variant="outline-primary" as={Link} to={`update-${indice}`}>
+						Modifier
+					</Button>
+					<Button variant="outline-danger" onClick={() => del(indice)}>
+						Supprimer
+					</Button>
+				</Card.Body>
+			</Card>
 		)
 	})
 
@@ -98,6 +124,7 @@ export default function CarnetPages(props) {
 							<tbody>{displayNotes}</tbody>
 						</Table>
 					</Col>
+					{displayCardsNotes}
 				</Row>
 			</Container>
 		</>
