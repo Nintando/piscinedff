@@ -1,6 +1,6 @@
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function JoueurUpdatePage() {
 	const { indice, group } = useParams()
@@ -12,7 +12,15 @@ export default function JoueurUpdatePage() {
 		note: notes[indice].note,
 	})
 
+	const [categ, setCateg] = useState([])
+
 	const navigate = useNavigate()
+
+	useEffect(() => {
+		let datas = localStorage.getItem(`categorie`) ? localStorage.getItem(`categorie`) : '[]'
+		datas = JSON.parse(datas)
+		setCateg(datas)
+	}, [])
 
 	function Update(e) {
 		e.preventDefault()
@@ -23,6 +31,11 @@ export default function JoueurUpdatePage() {
 		localStorage.setItem(`notes-${group}`, JSON.stringify(notes))
 		navigate(`/carnet/${group}`)
 	}
+
+	let displaySelect = categ.map(categInfos => {
+		const id = categInfos.id
+		return <option value={categInfos.titre}>{categInfos.titre}</option>
+	})
 
 	return (
 		<>
@@ -63,9 +76,7 @@ export default function JoueurUpdatePage() {
 									required
 								>
 									<option>Choisir une catégorie</option>
-									<option value="Devoir">Devoir</option>
-									<option value="Jeux">Jeux</option>
-									<option value="Manga">Manga</option>
+									{displaySelect}
 								</select>
 							</Form.Group>
 							<Form.Group className="m-3">
