@@ -5,15 +5,8 @@ import { useState, useEffect } from 'react'
 export default function HomePage() {
 	const [carnet, setCarnet] = useState([])
 	const [config, setConfig] = useState('')
-	const [nbNotes, setNbNotes] = useState('')
-
-	for (var i = 0; i < carnet.length; i++) {
-		let nbNotes = localStorage.getItem(`notes-${carnet[i].titre}`)
-		let nbToto = nbNotes.length
-		console.log(nbToto)
-	}
-
-	console.log(localStorage.length)
+	const [nbNotes, setNbNotes] = useState(0)
+	const [nbNotesCateg, setNbNotesCateg] = useState(0)
 
 	let displayCarnet = carnet.map((carnetInfos, indice) => {
 		const id = carnetInfos.id
@@ -75,12 +68,27 @@ export default function HomePage() {
 
 	useEffect(() => {
 		localStorage.setItem(`carnets`, JSON.stringify(carnet))
+		for (let i = 0; i < carnet.length; i++) {
+			let total = localStorage.getItem(`notes-${carnet[i].titre}`)
+			total = JSON.parse(total)
+			let nbToto = total.length
+			setNbNotes(old => old + nbToto)
+			console.log(nbToto)
+		}
+
+		for (let i = 0; i < carnet.length; i++) {
+			let total = localStorage.getItem(`notes-${carnet[i].titre}`)
+			total = JSON.parse(total)
+			let nbToto = total
+			setNbNotesCateg(old => old + nbToto)
+			console.log(nbToto)
+		}
 	}, [carnet])
 
 	useEffect(() => {
 		let configuration = localStorage.getItem('configC')
 		setConfig(configuration)
-	})
+	}, [])
 
 	function deleteCarnetItem(i) {
 		let tmp = [...carnet]
@@ -100,8 +108,8 @@ export default function HomePage() {
 								&nbsp;
 								<h1 className="display-5 fw-bold">Statistiques</h1>
 								<h3>Le nombre de carnets de notes : {carnet.length}</h3>
-								<h3>Le nombre de notes totales : </h3>
-								<h3>Le nombre de notes par catégorie : </h3>
+								<h3>Le nombre de notes totales : {nbNotes} </h3>
+								<h3>Le nombre de notes par catégorie : {nbNotesCateg} </h3>
 							</Container>
 						</div>
 						<Col>
