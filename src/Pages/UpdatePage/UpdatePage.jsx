@@ -2,10 +2,11 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
-export default function JoueurUpdatePage() {
+export default function CarnetUpdatePage() {
 	const { indice, group } = useParams()
 	let notes = localStorage.getItem(`notes-${group}`)
 	notes = JSON.parse(notes)
+
 	const [formUpdate, setFormUpdate] = useState({
 		titre: notes[indice].titre,
 		categorie: notes[indice].categorie,

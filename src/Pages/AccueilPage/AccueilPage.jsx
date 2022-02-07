@@ -1,9 +1,10 @@
-import { Container, Row, Button, Col, Table } from 'react-bootstrap'
+import { Container, Row, Button, Col, Table, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 export default function HomePage() {
 	const [carnet, setCarnet] = useState([])
+	const [config, setConfig] = useState('')
 
 	let displayCarnet = carnet.map((carnetInfos, indice) => {
 		const id = carnetInfos.id
@@ -21,6 +22,23 @@ export default function HomePage() {
 					</Button>
 				</td>
 			</tr>
+		)
+	})
+
+	let displayCarnetCards = carnet.map((carnetInfos, indice) => {
+		const id = carnetInfos.id
+		return (
+			<Card className="text-center m-2" style={{ width: '18rem' }} key={'carnets-' + carnetInfos.id}>
+				<Card.Header as="h5">{carnetInfos.titre}</Card.Header>
+				<Card.Body>
+					<Button variant="outline-primary" as={Link} to={`/carnet/${carnetInfos.titre}`}>
+						Aller dans le Carnet
+					</Button>
+					<Button variant="outline-danger" onClick={() => deleteCarnetItem(indice)}>
+						Supprimer le carnet
+					</Button>
+				</Card.Body>
+			</Card>
 		)
 	})
 
@@ -44,6 +62,11 @@ export default function HomePage() {
 		localStorage.setItem(`carnets`, JSON.stringify(carnet))
 	}, [carnet])
 
+	useEffect(() => {
+		let configuration = localStorage.getItem('configC')
+		setConfig(configuration)
+	})
+
 	function deleteCarnetItem(i) {
 		let tmp = [...carnet]
 		tmp.splice(i, 1)
@@ -63,23 +86,26 @@ export default function HomePage() {
 								<h1 className="display-5 fw-bold">Statistiques</h1>
 							</Container>
 						</div>
-					</Row>
-					<Row className="mb-4 float-end">
 						<Col>
-							<Button className="float-end mb-2" onClick={add}>
+							<Button className=" mb-2" onClick={add}>
 								Créer un nouveau carnet
 							</Button>
 						</Col>
-						<Table striped bordered hover>
-							<thead>
-								<tr>
-									<th>Titre</th>
-									<th>Aller dans le carnet</th>
-									<th>Supprimer</th>
-								</tr>
-							</thead>
-							<tbody>{displayCarnet}</tbody>
-						</Table>
+					</Row>
+					<Row className="mb-4 ">
+						{config !== 'cardsCarnets' && (
+							<Table striped bordered hover>
+								<thead>
+									<tr>
+										<th>Titre</th>
+										<th>Aller dans le carnet</th>
+										<th>Supprimer</th>
+									</tr>
+								</thead>
+								<tbody>{displayCarnet}</tbody>
+							</Table>
+						)}
+						{config === 'cardsCarnets' && displayCarnetCards}
 					</Row>
 				</Container>
 			</main>

@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import showdown from 'showdown'
 
-export default function NotesAddPage(props) {
+export default function NotesAddPage() {
 	const { group } = useParams()
 
 	const [formAdd, setFormAdd] = useState({

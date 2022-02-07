@@ -7,12 +7,18 @@ export default function CarnetPages(props) {
 	const [notes, setNotes] = useState([])
 	const [notesFilter, setNotesFilter] = useState([])
 	const [search, setSearch] = useState('')
+	const [config, setConfig] = useState('')
 
 	useEffect(() => {
 		let datas = localStorage.getItem(`notes-${group}`) ? localStorage.getItem(`notes-${group}`) : '[]'
 		datas = JSON.parse(datas)
 		setNotes(datas)
 	}, [])
+
+	useEffect(() => {
+		let configuration = localStorage.getItem('configN')
+		setConfig(configuration)
+	})
 
 	function del(indice) {
 		let datas = localStorage.getItem(`notes-${group}`)
@@ -44,7 +50,7 @@ export default function CarnetPages(props) {
 
 	let displayCardsNotes = notesFilter.map((note, indice) => {
 		return (
-			<Card className="text-center" style={{ width: '18rem' }} key={'notes-' + note.id}>
+			<Card className="text-center m-2" style={{ width: '18rem' }} key={'notes-' + note.id}>
 				<Card.Header as="h5">{note.titre}</Card.Header>
 				<Card.Body>
 					<Card.Subtitle className="mb-2 text-muted">{note.categorie}</Card.Subtitle>
@@ -110,21 +116,22 @@ export default function CarnetPages(props) {
 								Ajouter une note
 							</Button>
 						</div>
-
-						<Table striped bordered hover>
-							<thead>
-								<tr>
-									<th>Titre</th>
-									<th>Catégorie</th>
-									<th>Note</th>
-									<th>Modifier</th>
-									<th>Supprimer</th>
-								</tr>
-							</thead>
-							<tbody>{displayNotes}</tbody>
-						</Table>
+						{config !== 'cardsNotes' && (
+							<Table striped bordered hover>
+								<thead>
+									<tr>
+										<th>Titre</th>
+										<th>Catégorie</th>
+										<th>Note</th>
+										<th>Modifier</th>
+										<th>Supprimer</th>
+									</tr>
+								</thead>
+								<tbody>{displayNotes}</tbody>
+							</Table>
+						)}
 					</Col>
-					{displayCardsNotes}
+					{config === 'cardsNotes' && displayCardsNotes}
 				</Row>
 			</Container>
 		</>
