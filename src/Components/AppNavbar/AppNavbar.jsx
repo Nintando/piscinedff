@@ -1,8 +1,7 @@
 import { Navbar, Container, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-export default function AppNavbar(props) {
-	const setSearch = props.setSearch
+export default function AppNavbar() {
 	return (
 		<Navbar bg="light" expand="lg">
 			<Container>

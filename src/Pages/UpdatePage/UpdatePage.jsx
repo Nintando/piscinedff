@@ -8,6 +8,7 @@ export default function CarnetUpdatePage() {
 	notes = JSON.parse(notes)
 
 	const [formUpdate, setFormUpdate] = useState({
+		id: notes[indice].id,
 		titre: notes[indice].titre,
 		categorie: notes[indice].categorie,
 		note: notes[indice].note,

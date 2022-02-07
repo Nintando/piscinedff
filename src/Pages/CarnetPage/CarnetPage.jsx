@@ -2,7 +2,7 @@ import { Container, Row, Col, Button, Table, Form, FormControl, Card } from 'rea
 import { Link, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
-export default function CarnetPages(props) {
+export default function CarnetPages() {
 	const { group } = useParams()
 	const [notes, setNotes] = useState([])
 	const [notesFilter, setNotesFilter] = useState([])
@@ -63,7 +63,7 @@ export default function CarnetPages(props) {
 						}}
 					/>
 					<Card.Text>{note.note}</Card.Text>
-					<Button variant="outline-primary" as={Link} to={`update-${indice}`}>
+					<Button className="m-2" variant="outline-primary" as={Link} to={`update-${indice}`}>
 						Modifier
 					</Button>
 					<Button variant="outline-danger" onClick={() => del(indice)}>
@@ -93,6 +93,7 @@ export default function CarnetPages(props) {
 				<Row>
 					<Col>
 						<h1>Gestion des notes</h1>
+						<h3>Nombre de notes totales : {notes.length}</h3>
 						<hr />
 						<Form className="d-flex mb-4">
 							<FormControl

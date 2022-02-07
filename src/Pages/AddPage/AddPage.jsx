@@ -7,6 +7,7 @@ export default function NotesAddPage() {
 	const { group } = useParams()
 
 	const [formAdd, setFormAdd] = useState({
+		id: '',
 		titre: '',
 		categorie: '',
 		note: '',

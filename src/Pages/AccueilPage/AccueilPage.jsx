@@ -5,12 +5,24 @@ import { useState, useEffect } from 'react'
 export default function HomePage() {
 	const [carnet, setCarnet] = useState([])
 	const [config, setConfig] = useState('')
+	const [nbNotes, setNbNotes] = useState('')
+
+	for (var i = 0; i < carnet.length; i++) {
+		let nbNotes = localStorage.getItem(`notes-${carnet[i].titre}`)
+		let nbToto = nbNotes.length
+		console.log(nbToto)
+	}
+
+	console.log(localStorage.length)
 
 	let displayCarnet = carnet.map((carnetInfos, indice) => {
 		const id = carnetInfos.id
 		return (
 			<tr key={'carnets-' + carnetInfos.id}>
 				<td>{carnetInfos.titre}</td>
+				<td>
+					<Button variant="outline-success">Favoris</Button>
+				</td>
 				<td>
 					<Button variant="outline-primary" as={Link} to={`/carnet/${carnetInfos.titre}`}>
 						Carnet
@@ -31,7 +43,10 @@ export default function HomePage() {
 			<Card className="text-center m-2" style={{ width: '18rem' }} key={'carnets-' + carnetInfos.id}>
 				<Card.Header as="h5">{carnetInfos.titre}</Card.Header>
 				<Card.Body>
-					<Button variant="outline-primary" as={Link} to={`/carnet/${carnetInfos.titre}`}>
+					<Button className="mb-2" variant="outline-success">
+						Favoris
+					</Button>
+					<Button className="mb-2" variant="outline-primary" as={Link} to={`/carnet/${carnetInfos.titre}`}>
 						Aller dans le Carnet
 					</Button>
 					<Button variant="outline-danger" onClick={() => deleteCarnetItem(indice)}>
@@ -84,6 +99,9 @@ export default function HomePage() {
 								<p className="col-md-8 fs-4">Piscine ReactJs</p>
 								&nbsp;
 								<h1 className="display-5 fw-bold">Statistiques</h1>
+								<h3>Le nombre de carnets de notes : {carnet.length}</h3>
+								<h3>Le nombre de notes totales : </h3>
+								<h3>Le nombre de notes par catégorie : </h3>
 							</Container>
 						</div>
 						<Col>
@@ -98,6 +116,7 @@ export default function HomePage() {
 								<thead>
 									<tr>
 										<th>Titre</th>
+										<th>Mettre en favoris</th>
 										<th>Aller dans le carnet</th>
 										<th>Supprimer</th>
 									</tr>
