@@ -1,9 +1,12 @@
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { Converter } from 'showdown'
 
 export default function CarnetUpdatePage() {
 	const { indice, group } = useParams()
+	const converter = new Converter()
+
 	let notes = localStorage.getItem(`notes-${group}`)
 	notes = JSON.parse(notes)
 
@@ -38,6 +41,9 @@ export default function CarnetUpdatePage() {
 		const id = categInfos.id
 		return <option value={categInfos.titre}>{categInfos.titre}</option>
 	})
+
+	let text = formUpdate.note,
+		htmlMD = converter.makeHtml(text)
 
 	return (
 		<>
@@ -94,8 +100,9 @@ export default function CarnetUpdatePage() {
 									}}
 									required
 								/>
-								<textarea type="text" placeholder="Entrer une note" value={formUpdate.note} />
 							</Form.Group>
+							<h4>Prévisualition : </h4>
+							<div dangerouslySetInnerHTML={{ __html: htmlMD }} />
 
 							<hr />
 

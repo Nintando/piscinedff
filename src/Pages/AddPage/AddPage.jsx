@@ -104,8 +104,9 @@ export default function NotesAddPage() {
 									}}
 									required
 								/>
-								<div dangerouslySetInnerHTML={{ __html: htmlMD }}></div>
 							</Form.Group>
+							<h4>Prévisualition : </h4>
+							<div dangerouslySetInnerHTML={{ __html: htmlMD }} />
 
 							<hr />
 

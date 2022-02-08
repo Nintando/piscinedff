@@ -35,6 +35,11 @@ export default function CarnetPages() {
 				<td>{note.categorie}</td>
 				<td>{note.note}</td>
 				<td>
+					<Button variant="outline-secondary" as={Link} to={`prev-${indice}`}>
+						Prévisu de la note
+					</Button>
+				</td>
+				<td>
 					<Button variant="outline-primary" as={Link} to={`update-${indice}`}>
 						Modifier
 					</Button>
@@ -62,7 +67,17 @@ export default function CarnetPages() {
 							borderColor: '#000000',
 						}}
 					/>
-					<Card.Text>{note.note}</Card.Text>
+					<Button as={Link} to={`prev-${indice}`} variant="outline-secondary">
+						{note.note}
+					</Button>
+					<hr
+						style={{
+							color: '#000000',
+							backgroundColor: '#000000',
+							height: 0.5,
+							borderColor: '#000000',
+						}}
+					/>
 					<Button className="m-2" variant="outline-primary" as={Link} to={`update-${indice}`}>
 						Modifier
 					</Button>
@@ -124,6 +139,7 @@ export default function CarnetPages() {
 										<th>Titre</th>
 										<th>Catégorie</th>
 										<th>Note</th>
+										<th>Prévisualisation</th>
 										<th>Modifier</th>
 										<th>Supprimer</th>
 									</tr>

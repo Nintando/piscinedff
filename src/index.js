@@ -26,6 +26,7 @@ ReactDOM.render(
 					<Route index element={<CarnetPage />} />
 					<Route path="add" element={<AddPage />} />
 					<Route path="update-:indice" element={<UpdatePage />} />
+					<Route path="prev-:indice" element={<PrevNotePage />} />
 				</Route>
 			</Routes>
 		</Router>
