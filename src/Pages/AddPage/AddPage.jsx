@@ -1,10 +1,11 @@
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import showdown from 'showdown'
+import { Converter } from 'showdown'
 
 export default function NotesAddPage() {
 	const { group } = useParams()
+	const converter = new Converter()
 
 	const [formAdd, setFormAdd] = useState({
 		id: '',
@@ -44,12 +45,16 @@ export default function NotesAddPage() {
 		return <option value={categInfos.titre}>{categInfos.titre}</option>
 	})
 
+	let text = formAdd.note,
+		htmlMD = converter.makeHtml(text)
+
 	return (
 		<>
 			<Container>
 				<Row>
 					<Col>
 						<h1>Ajouter une note</h1>
+
 						<hr />
 					</Col>
 				</Row>
@@ -99,7 +104,7 @@ export default function NotesAddPage() {
 									}}
 									required
 								/>
-								<textarea type="text" placeholder="Entrer une note" value={formAdd.note} />
+								<div dangerouslySetInnerHTML={{ __html: htmlMD }}></div>
 							</Form.Group>
 
 							<hr />

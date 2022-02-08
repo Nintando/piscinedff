@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 
 export default function HomePage() {
 	const [carnet, setCarnet] = useState([])
+	const [favoris, setFavoris] = useState([])
 	const [config, setConfig] = useState('')
 	const [nbNotes, setNbNotes] = useState(0)
 	const [nbNotesCateg, setNbNotesCateg] = useState(0)
@@ -14,7 +15,14 @@ export default function HomePage() {
 			<tr key={'carnets-' + carnetInfos.id}>
 				<td>{carnetInfos.titre}</td>
 				<td>
-					<Button variant="outline-success">Favoris</Button>
+					<Button
+						variant="outline-success"
+						onClick={() => {
+							fav(indice)
+						}}
+					>
+						Favoris
+					</Button>
 				</td>
 				<td>
 					<Button variant="outline-primary" as={Link} to={`/carnet/${carnetInfos.titre}`}>
@@ -36,9 +44,30 @@ export default function HomePage() {
 			<Card className="text-center m-2" style={{ width: '18rem' }} key={'carnets-' + carnetInfos.id}>
 				<Card.Header as="h5">{carnetInfos.titre}</Card.Header>
 				<Card.Body>
-					<Button className="mb-2" variant="outline-success">
-						Favoris
-					</Button>
+					{favoris !== id && (
+						<Button
+							className="mb-2"
+							variant="outline-success"
+							onClick={() => {
+								fav(indice)
+							}}
+						>
+							Favoris
+						</Button>
+					)}
+
+					{favoris !== id && (
+						<Button
+							className="mb-2"
+							variant="outline-secondary"
+							onClick={() => {
+								deleteFavItem(indice)
+							}}
+						>
+							Retirer du Favoris
+						</Button>
+					)}
+
 					<Button className="mb-2" variant="outline-primary" as={Link} to={`/carnet/${carnetInfos.titre}`}>
 						Aller dans le Carnet
 					</Button>
@@ -71,17 +100,11 @@ export default function HomePage() {
 		for (let i = 0; i < carnet.length; i++) {
 			let total = localStorage.getItem(`notes-${carnet[i].titre}`)
 			total = JSON.parse(total)
-			let nbToto = total.length
-			setNbNotes(old => old + nbToto)
-			console.log(nbToto)
-		}
-
-		for (let i = 0; i < carnet.length; i++) {
-			let total = localStorage.getItem(`notes-${carnet[i].titre}`)
-			total = JSON.parse(total)
-			let nbToto = total
-			setNbNotesCateg(old => old + nbToto)
-			console.log(nbToto)
+			if (total !== null) {
+				let nbToto = total.length
+				setNbNotes(old => old + nbToto)
+				console.log(nbToto)
+			}
 		}
 	}, [carnet])
 
@@ -89,6 +112,32 @@ export default function HomePage() {
 		let configuration = localStorage.getItem('configC')
 		setConfig(configuration)
 	}, [])
+
+	useEffect(() => {
+		let favs = localStorage.getItem(`favoris`)
+		setFavoris(JSON.parse(favs))
+	}, [])
+
+	useEffect(() => {
+		localStorage.setItem('favoris', JSON.stringify(favoris))
+	}, [favoris])
+
+	function fav(i) {
+		let fav = carnet[i].titre
+		let tmp = [...favoris]
+		let id = Date.now()
+		let obj = { id, fav }
+		tmp.push(obj)
+		setFavoris(tmp)
+
+		console.log(tmp)
+	}
+
+	function deleteFavItem(i) {
+		let tmp = [...favoris]
+		tmp.splice(i, 1)
+		setFavoris(tmp)
+	}
 
 	function deleteCarnetItem(i) {
 		let tmp = [...carnet]
@@ -109,7 +158,6 @@ export default function HomePage() {
 								<h1 className="display-5 fw-bold">Statistiques</h1>
 								<h3>Le nombre de carnets de notes : {carnet.length}</h3>
 								<h3>Le nombre de notes totales : {nbNotes} </h3>
-								<h3>Le nombre de notes par catégorie : {nbNotesCateg} </h3>
 							</Container>
 						</div>
 						<Col>
