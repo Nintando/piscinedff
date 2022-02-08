@@ -4,19 +4,11 @@ import { useState, useEffect } from 'react'
 
 export default function AppNavbar() {
 	const [favorisBar, setFavorisBar] = useState([])
-	const [favCarnet, setFavCarnet] = useState([])
-
-	useEffect(() => {
-		let carnetFav = localStorage.getItem('carnets')
-		setFavCarnet(JSON.parse(carnetFav))
-	}, [])
-
-	console.log(favCarnet)
 
 	useEffect(() => {
 		let datas = localStorage.getItem('favoris')
 		setFavorisBar(JSON.parse(datas))
-	}, [])
+	}, [favorisBar])
 
 	let displayFav = favorisBar.map(favBar => {
 		const id = favBar.id
