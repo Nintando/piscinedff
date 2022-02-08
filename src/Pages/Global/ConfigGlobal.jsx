@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 export default function ConfigGlobal() {
-	const { indice } = useParams()
 	const [categorie, setCategorie] = useState([])
 
 	let displayCate = categorie.map((categorieInfos, indice) => {
@@ -36,13 +35,14 @@ export default function ConfigGlobal() {
 		}
 	}
 
-	function updateItem() {
+	function updateItem(indice) {
 		let titre = window.prompt("Veuillez modifier l'intitulé de votre catégorie")
 		let categ = localStorage.getItem('categorie')
 		categ = JSON.parse(categ)
 		if (titre !== null && titre.trim().length > 0) {
-			categ[indice] = titre
+			categ[indice].titre = titre
 			localStorage.setItem('categorie', JSON.stringify(categ))
+			setCategorie(categ)
 		}
 	}
 

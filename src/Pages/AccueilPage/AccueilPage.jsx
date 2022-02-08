@@ -7,7 +7,6 @@ export default function HomePage() {
 	const [favoris, setFavoris] = useState([])
 	const [config, setConfig] = useState('')
 	const [nbNotes, setNbNotes] = useState(0)
-	const [nbNotesCateg, setNbNotesCateg] = useState(0)
 
 	let displayCarnet = carnet.map((carnetInfos, indice) => {
 		const id = carnetInfos.id
@@ -40,11 +39,12 @@ export default function HomePage() {
 
 	let displayCarnetCards = carnet.map((carnetInfos, indice) => {
 		const id = carnetInfos.id
+		const isfavoris = carnetInfos.favoris
 		return (
 			<Card className="text-center m-2" style={{ width: '18rem' }} key={'carnets-' + carnetInfos.id}>
 				<Card.Header as="h5">{carnetInfos.titre}</Card.Header>
 				<Card.Body>
-					{favoris !== id && (
+					{isfavoris === false && (
 						<Button
 							className="mb-2"
 							variant="outline-success"
@@ -56,12 +56,12 @@ export default function HomePage() {
 						</Button>
 					)}
 
-					{favoris !== id && (
+					{isfavoris === true && (
 						<Button
 							className="mb-2"
 							variant="outline-secondary"
 							onClick={() => {
-								deleteFavItem(indice)
+								deleteFavItem(id, indice)
 							}}
 						>
 							Retirer du Favoris
@@ -84,7 +84,7 @@ export default function HomePage() {
 		if (titre !== null && titre.trim().length > 0) {
 			let tmp = [...carnet]
 			let id = Date.now()
-			let obj = { id, titre }
+			let obj = { id, titre, favoris: false }
 			tmp.push(obj)
 			setCarnet(tmp)
 		}
@@ -123,20 +123,28 @@ export default function HomePage() {
 	}, [favoris])
 
 	function fav(i) {
+		carnet[i].favoris = true
+		setCarnet(carnet)
+
 		let fav = carnet[i].titre
+		let id = carnet[i].id
 		let tmp = [...favoris]
-		let id = Date.now()
 		let obj = { id, fav }
 		tmp.push(obj)
 		setFavoris(tmp)
-
-		console.log(tmp)
 	}
 
-	function deleteFavItem(i) {
+	function deleteFavItem(id, i) {
+		carnet[i].favoris = false
+		setCarnet(carnet)
+
 		let tmp = [...favoris]
-		tmp.splice(i, 1)
-		setFavoris(tmp)
+		for (let ni = 0; ni < favoris.length; ni++) {
+			if (favoris[ni].id === id) {
+				tmp.splice(ni, 1)
+				setFavoris(tmp)
+			}
+		}
 	}
 
 	function deleteCarnetItem(i) {
