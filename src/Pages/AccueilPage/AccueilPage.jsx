@@ -10,18 +10,35 @@ export default function HomePage() {
 
 	let displayCarnet = carnet.map((carnetInfos, indice) => {
 		const id = carnetInfos.id
+		const isfavoris = carnetInfos.favoris
+
 		return (
 			<tr key={'carnets-' + carnetInfos.id}>
 				<td>{carnetInfos.titre}</td>
 				<td>
-					<Button
-						variant="outline-success"
-						onClick={() => {
-							fav(indice)
-						}}
-					>
-						Favoris
-					</Button>
+					{isfavoris === false && (
+						<Button
+							className="mb-2"
+							variant="outline-success"
+							onClick={() => {
+								fav(indice)
+							}}
+						>
+							Favoris
+						</Button>
+					)}
+
+					{isfavoris === true && (
+						<Button
+							className="mb-2"
+							variant="outline-secondary"
+							onClick={() => {
+								deleteFavItem(id, indice)
+							}}
+						>
+							Retirer du Favoris
+						</Button>
+					)}
 				</td>
 				<td>
 					<Button variant="outline-primary" as={Link} to={`/carnet/${carnetInfos.titre}`}>
@@ -103,7 +120,6 @@ export default function HomePage() {
 			if (total !== null) {
 				let nbToto = total.length
 				setNbNotes(old => old + nbToto)
-				console.log(nbToto)
 			}
 		}
 	}, [carnet])
@@ -123,20 +139,26 @@ export default function HomePage() {
 	}, [favoris])
 
 	function fav(i) {
-		carnet[i].favoris = true
-		setCarnet(carnet)
-
 		let fav = carnet[i].titre
 		let id = carnet[i].id
 		let tmp = [...favoris]
 		let obj = { id, fav }
 		tmp.push(obj)
 		setFavoris(tmp)
+
+		carnet[i].favoris = true
+		setCarnet(carnet)
+		localStorage.setItem('carnets', JSON.stringify(carnet))
+
+		console.log(carnet)
 	}
 
 	function deleteFavItem(id, i) {
 		carnet[i].favoris = false
 		setCarnet(carnet)
+		localStorage.setItem('carnets', JSON.stringify(carnet))
+
+		console.log(carnet)
 
 		let tmp = [...favoris]
 		for (let ni = 0; ni < favoris.length; ni++) {
@@ -180,7 +202,7 @@ export default function HomePage() {
 								<thead>
 									<tr>
 										<th>Titre</th>
-										<th>Mettre en favoris</th>
+										<th>favoris</th>
 										<th>Aller dans le carnet</th>
 										<th>Supprimer</th>
 									</tr>
