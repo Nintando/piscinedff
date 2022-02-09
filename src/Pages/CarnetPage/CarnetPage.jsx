@@ -9,17 +9,20 @@ export default function CarnetPages() {
 	const [search, setSearch] = useState('')
 	const [config, setConfig] = useState('')
 
+	// Récupération des notes dans le localStorage
 	useEffect(() => {
 		let datas = localStorage.getItem(`notes-${group}`) ? localStorage.getItem(`notes-${group}`) : '[]'
 		datas = JSON.parse(datas)
 		setNotes(datas)
 	}, [])
 
+	// Récupération des configurations des notes dans le localStorage
 	useEffect(() => {
 		let configuration = localStorage.getItem('configN')
 		setConfig(configuration)
 	})
 
+	// Fonction qui permet de supprimer une note
 	function del(indice) {
 		let datas = localStorage.getItem(`notes-${group}`)
 		datas = JSON.parse(datas)
@@ -28,6 +31,7 @@ export default function CarnetPages() {
 		setNotes(datas)
 	}
 
+	// Affichage en Liste des notes
 	let displayNotes = notesFilter.map((note, indice) => {
 		return (
 			<tr key={'notes-' + note.id}>
@@ -53,6 +57,7 @@ export default function CarnetPages() {
 		)
 	})
 
+	// Affichage en Cards des notes
 	let displayCardsNotes = notesFilter.map((note, indice) => {
 		return (
 			<Card className="text-center m-2" style={{ width: '18rem' }} key={'notes-' + note.id}>
@@ -89,6 +94,7 @@ export default function CarnetPages() {
 		)
 	})
 
+	// Permets à la mise en marche de la barre de recherche
 	useEffect(() => {
 		setNotesFilter(notes)
 		if (search.length > 0) {

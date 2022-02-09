@@ -7,6 +7,7 @@ export default function CarnetUpdatePage() {
 	const { indice, group } = useParams()
 	const converter = new Converter()
 
+	// Récupération des notes dans le localStorage
 	let notes = localStorage.getItem(`notes-${group}`)
 	notes = JSON.parse(notes)
 
@@ -21,12 +22,14 @@ export default function CarnetUpdatePage() {
 
 	const navigate = useNavigate()
 
+	// Récupération des catégories dans le localStorage
 	useEffect(() => {
 		let datas = localStorage.getItem(`categorie`) ? localStorage.getItem(`categorie`) : '[]'
 		datas = JSON.parse(datas)
 		setCateg(datas)
 	}, [])
 
+	// Fonction qui permet de modifier la note
 	function Update(e) {
 		e.preventDefault()
 
@@ -37,11 +40,13 @@ export default function CarnetUpdatePage() {
 		navigate(`/carnet/${group}`)
 	}
 
+	// Affichage de la liste des catégories
 	let displaySelect = categ.map(categInfos => {
 		const id = categInfos.id
 		return <option value={categInfos.titre}>{categInfos.titre}</option>
 	})
 
+	// Permets à la conversion du MarkDown en HTML
 	let text = formUpdate.note,
 		htmlMD = converter.makeHtml(text)
 

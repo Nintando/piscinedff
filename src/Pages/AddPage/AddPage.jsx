@@ -18,12 +18,14 @@ export default function NotesAddPage() {
 
 	const navigate = useNavigate()
 
+	// Récupération des catégories dans le localStorage
 	useEffect(() => {
 		let datas = localStorage.getItem(`categorie`) ? localStorage.getItem(`categorie`) : '[]'
 		datas = JSON.parse(datas)
 		setCateg(datas)
 	}, [])
 
+	// Fonction qui permet d'ajouter une note
 	function add(e) {
 		e.preventDefault()
 
@@ -40,11 +42,13 @@ export default function NotesAddPage() {
 		navigate(`/carnet/${group}`)
 	}
 
+	// Affichage de la liste des catégories
 	let displaySelect = categ.map(categInfos => {
 		const id = categInfos.id
 		return <option value={categInfos.titre}>{categInfos.titre}</option>
 	})
 
+	// Permets à la conversion du MarkDown en HTML
 	let text = formAdd.note,
 		htmlMD = converter.makeHtml(text)
 

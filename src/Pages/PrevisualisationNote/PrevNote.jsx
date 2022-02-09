@@ -7,6 +7,7 @@ export default function CarnetUpdatePage() {
 	const { indice, group } = useParams()
 	const converter = new Converter()
 
+	// Récupération des notes dans le localStorage
 	let notes = localStorage.getItem(`notes-${group}`)
 	notes = JSON.parse(notes)
 
@@ -16,6 +17,7 @@ export default function CarnetUpdatePage() {
 		note: notes[indice].note,
 	})
 
+	// Permets à la conversion du MarkDown en HTML
 	let text = formUpdate.note,
 		htmlMD = converter.makeHtml(text)
 

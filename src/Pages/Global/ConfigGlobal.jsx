@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 export default function ConfigGlobal() {
 	const [categorie, setCategorie] = useState([])
 
+	// Affichage des Catégories
 	let displayCate = categorie.map((categorieInfos, indice) => {
 		const id = categorieInfos.id
 		return (
@@ -24,6 +25,7 @@ export default function ConfigGlobal() {
 		)
 	})
 
+	// Fonction qui permet l'ajout d'une catégorie
 	function add() {
 		let titre = window.prompt("Veuillez saisir l'intitulé de votre catégorie")
 		if (titre !== null && titre.trim().length > 0) {
@@ -35,6 +37,7 @@ export default function ConfigGlobal() {
 		}
 	}
 
+	// Fonction qui permet de modifier d'une catégorie
 	function updateItem(indice) {
 		let titre = window.prompt("Veuillez modifier l'intitulé de votre catégorie")
 		let categ = localStorage.getItem('categorie')
@@ -46,15 +49,18 @@ export default function ConfigGlobal() {
 		}
 	}
 
+	// Récupération des catégories dans le localStorage
 	useEffect(() => {
 		let datas = localStorage.getItem(`categorie`)
 		setCategorie(JSON.parse(datas))
 	}, [])
 
+	// Envoye des catégories dans le localStorage
 	useEffect(() => {
 		localStorage.setItem(`categorie`, JSON.stringify(categorie))
 	}, [categorie])
 
+	// Fonction qui permet de supprimer une catégorie
 	function deleteCateItem(i) {
 		let tmp = [...categorie]
 		tmp.splice(i, 1)

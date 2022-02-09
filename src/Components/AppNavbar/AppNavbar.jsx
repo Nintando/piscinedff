@@ -5,11 +5,13 @@ import { useState, useEffect } from 'react'
 export default function AppNavbar() {
 	const [favorisBar, setFavorisBar] = useState([])
 
+	// Récupération des favoris dans le localStorage
 	useEffect(() => {
 		let datas = localStorage.getItem('favoris')
 		setFavorisBar(JSON.parse(datas))
 	}, [favorisBar])
 
+	// Affichage des favoris
 	let displayFav = favorisBar.map(favBar => {
 		const id = favBar.id
 		return (

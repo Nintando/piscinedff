@@ -8,6 +8,7 @@ export default function HomePage() {
 	const [config, setConfig] = useState('')
 	const [nbNotes, setNbNotes] = useState(0)
 
+	// Affichage en liste des carnets de notes
 	let displayCarnet = carnet.map((carnetInfos, indice) => {
 		const id = carnetInfos.id
 		const isfavoris = carnetInfos.favoris
@@ -54,6 +55,7 @@ export default function HomePage() {
 		)
 	})
 
+	// Affichage en cards des carnets de notes
 	let displayCarnetCards = carnet.map((carnetInfos, indice) => {
 		const id = carnetInfos.id
 		const isfavoris = carnetInfos.favoris
@@ -96,6 +98,7 @@ export default function HomePage() {
 		)
 	})
 
+	// Fonction qui permet l'ajout d'un carnet de notes
 	function add() {
 		let titre = window.prompt("Veuillez saisir l'intitulé de votre carnet")
 		if (titre !== null && titre.trim().length > 0) {
@@ -107,13 +110,17 @@ export default function HomePage() {
 		}
 	}
 
+	// Récupération des carnets dans le localStorage
 	useEffect(() => {
 		let datas = localStorage.getItem(`carnets`)
 		setCarnet(JSON.parse(datas))
 	}, [])
 
+	// Envoye des carnets dans le localStorage
 	useEffect(() => {
 		localStorage.setItem(`carnets`, JSON.stringify(carnet))
+
+		// Permet de calculer le nombre de notes totales
 		for (let i = 0; i < carnet.length; i++) {
 			let total = localStorage.getItem(`notes-${carnet[i].titre}`)
 			total = JSON.parse(total)
@@ -124,20 +131,24 @@ export default function HomePage() {
 		}
 	}, [carnet])
 
+	// Récupération des configuration des carnets dans le localStorage
 	useEffect(() => {
 		let configuration = localStorage.getItem('configC')
 		setConfig(configuration)
 	}, [])
 
+	// Récupération des favoris dans le localStorage
 	useEffect(() => {
 		let favs = localStorage.getItem(`favoris`)
 		setFavoris(JSON.parse(favs))
 	}, [])
 
+	// Envoye des favoris dans le localStorage
 	useEffect(() => {
 		localStorage.setItem('favoris', JSON.stringify(favoris))
 	}, [favoris])
 
+	// Fonction qui permet de mettre un carnet en favoris
 	function fav(i) {
 		let fav = carnet[i].titre
 		let id = carnet[i].id
@@ -153,6 +164,7 @@ export default function HomePage() {
 		console.log(carnet)
 	}
 
+	// Fonction qui permet de retirer un carnet en favoris
 	function deleteFavItem(id, i) {
 		carnet[i].favoris = false
 		setCarnet(carnet)
@@ -169,6 +181,7 @@ export default function HomePage() {
 		}
 	}
 
+	// Fonction qui permet de retirer un carnet
 	function deleteCarnetItem(i) {
 		let tmp = [...carnet]
 		tmp.splice(i, 1)
