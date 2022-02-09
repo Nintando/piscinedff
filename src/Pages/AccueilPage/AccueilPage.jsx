@@ -191,25 +191,26 @@ export default function HomePage() {
 	return (
 		<div className="App">
 			<main>
-				<Container>
-					<Row>
-						<div className="p-5 mb-4 bg-light rounded-3">
-							<Container fluid className="py-5">
-								<h1 className="display-5 fw-bold">BTC Single Page Application</h1>
+				<Container style={{backgroundColor:'white'}}>
+					<Row styme={{height:'75%'}}>
+						<div  className="p-5 mb-4 bg-light rounded-3">
+							<Container fluid style={{height:'87.5%'}} className="py-5">
+								<h1  style={{fontSize:'1.5em'}} className="display-5 fw-bold">BTC Single Page Application</h1>
 								<p className="col-md-8 fs-4">Piscine ReactJs</p>
 								&nbsp;
-								<h1 className="display-5 fw-bold">Statistiques</h1>
+								<h1 style={{fontSize:'1.5em'}} className="display-5 fw-bold">Statistiques</h1>
 								<h3>Le nombre de carnets de notes : {carnet.length}</h3>
 								<h3>Le nombre de notes totales : {nbNotes} </h3>
 							</Container>
 						</div>
+						
+					</Row>
+					<Row className="mb-4">
 						<Col>
 							<Button className=" mb-2" onClick={add}>
 								Créer un nouveau carnet
 							</Button>
 						</Col>
-					</Row>
-					<Row className="mb-4 ">
 						{config !== 'cardsCarnets' && (
 							<Table striped bordered hover>
 								<thead>
@@ -220,7 +221,7 @@ export default function HomePage() {
 										<th>Supprimer</th>
 									</tr>
 								</thead>
-								<tbody>{displayCarnet}</tbody>
+								<tbody style={{overflowY:'scroll'}}>{displayCarnet}</tbody>
 							</Table>
 						)}
 						{config === 'cardsCarnets' && displayCarnetCards}

@@ -22,7 +22,7 @@ export default function AppNavbar() {
 	})
 
 	return (
-		<Navbar bg="light" expand="lg">
+		<Navbar bg="dark" expand="lg" variant='dark'>
 			<Container>
 				<Navbar.Brand href="/">App Carnet de Note</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />

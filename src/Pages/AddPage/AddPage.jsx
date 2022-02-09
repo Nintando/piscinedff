@@ -95,11 +95,12 @@ export default function NotesAddPage() {
 									{displaySelect}
 								</select>
 							</Form.Group>
+							<Form.Label className="m-2">Note : </Form.Label>
 							<Form.Group className="m-3">
-								<Form.Label className="m-2">Note : </Form.Label>
 								<textarea
 									type="text"
 									placeholder="Entrer une note"
+									style={{ height: '10%', width:'50%' }}
 									value={formAdd.note}
 									onChange={e => {
 										let tmp = { ...formAdd }
